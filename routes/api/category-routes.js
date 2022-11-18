@@ -7,11 +7,13 @@ router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
   Category.findAll({
-    include: {
+    attributes: ['id', 'category_name'],
+    include: [{
       model: Product,
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
-    }
+    }]
   })
+  .then(categoriesDB => res.json(categoriesDB))
 });
 
 router.get('/:id', (req, res) => {
@@ -21,11 +23,13 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    include: {
+    attributes: ['id', 'category_name'],
+    include: [{
       model: Product,
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
-    }
+    }]
   })
+  .then(categoriesDB => res.json(categoriesDB))
 });
 
 router.post('/', (req, res) => {
@@ -33,6 +37,7 @@ router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.category_name
   })
+  .then(categoriesDB => res.json(categoriesDB))
 });
 
 router.put('/:id', (req, res) => {
@@ -42,6 +47,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
+  .then(categoriesDB => res.json(categoriesDB))
 });
 
 router.delete('/:id', (req, res) => {
@@ -51,6 +57,7 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
+  .then(categoriesDB => res.json(categoriesDB))
 });
 
 module.exports = router;

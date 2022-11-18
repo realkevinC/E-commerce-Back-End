@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   Product.findAll({
-    attributes: ['id', 'product_name', 'price', 'stock'],
+    attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [
       {
         model: Category,
@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
       }
     ]
   })
+  .then(productDB => res.json(productDB))
 });
 
 // get one product
@@ -30,7 +31,7 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['id', 'product_name', 'price', 'stock'],
+    attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [
       {
         model: Category,
@@ -42,6 +43,7 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
+  .then(productDB => res.json(productDB))
 });
 
 // create new product
@@ -126,6 +128,7 @@ router.delete('/:id', (req, res) => {
         id: req.params.id
     }
 })
+.then(productDB => res.json(productDB))
 });
 
 module.exports = router;

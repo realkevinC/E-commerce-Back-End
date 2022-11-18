@@ -7,11 +7,13 @@ router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   Tag.findAll({
+    attributes: ['id', 'tag_name'],
     include: {
       model: Product,
       attributes: ['product_name', 'price', 'stock', 'category_id']
     }
   })
+  .then(tagsDB => res.json(tagsDB))
 });
 
 router.get('/:id', (req, res) => {
@@ -21,11 +23,12 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    include: {
+    include: [{
       model: Product,
       attributes: ['product_name', 'price', 'stock', 'category_id']
-    }
+    }]
   })
+  .then(tagsDB => res.json(tagsDB))
 });
 
 router.post('/', (req, res) => {
@@ -42,6 +45,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
+  .then(tagsDB => res.json(tagsDB))
 });
 
 router.delete('/:id', (req, res) => {
@@ -51,6 +55,7 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
+  .then(tagsDB => res.json(tagsDB))
 });
 
 module.exports = router;
